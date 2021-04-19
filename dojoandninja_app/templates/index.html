@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col bg-info p-2 text-dark">
+                <h2>ADD A DOJO</h2>
+                <form action="/dojos/create" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" id="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" name="city" id="city">
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <select  name="state"class="form-control mb-3">
+                            <option value="AL">Alabama</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AZ">Arizona</option>
+                            <option value="AR">Arkansas</option>
+                            <option value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="DE">Delaware</option>
+                            <option value="DC">District Of Columbia</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="IA">Iowa</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LA">Louisiana</option>
+                            <option value="ME">Maine</option>
+                            <option value="MD">Maryland</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MT">Montana</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NY">New York</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="UT">Utah</option>
+                            <option value="VT">Vermont</option>
+                            <option value="VA">Virginia</option>
+                            <option value="WA">Washington</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WY">Wyoming</option>
+                        </select>
+                    </div>
+                    <input type="submit" value="ADD" class="btn btn-primary">
+                </form>
+            </div>
+            <div class="col bg-dark p-2 text-light">
+                
+                <h2>ADD A  NINJA</h2>
+                <form action="/ninjas/create" method="post" class="">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label for="name">Fist Name</label>
+                        <input type="text" name="first_name" id="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Last Name</label>
+                        <input type="text" name="last_name" id="city">
+                    </div>
+                    <div class="containter">
+                        <select name="dojo_id" id="ninjas_id"class="form-control">
+                            <option value="Choose Dojo">Chose</option>
+                            {% for dojo in all_dojos %}
+                            <option value="{{dojo.id}}">{{dojo.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="container">
+                        <input type="submit" value="ADD" class="btn btn-primary mt-5">
+                    </div>
+                </form>
+            </div>
+        </div><br>
+        <hr class="bg-primary p-1">
+        <div class="container mt-4 row ">
+            <div class="card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>City</th>
+                            <th>State</th>
+                        </tr>
+                        {% for dojo in all_dojos %}
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="card-header"><a href="dojos/{{dojo.id}}/delete"> {{dojo.id}} / delete</a></td>
+                            <td class="card-header">{{dojo.name}}</td>
+                            <td class="card-header">{{dojo.city}}</td>
+                            <td class="card-header">{{dojo.state}}</td>
+                        </tr>
+                        {% for ninja in dojo.ninjas.all %}
+                        <ul class="list-group list-group-flush">
+                            <td class="list-group-item">{{ninja.first_name}} {{ninja.last_name}}</td>
+                            {% endfor %}
+                        </ul>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
